@@ -66,7 +66,7 @@
 		<div class = "col-md-4">
 			<a class="navbar-brand link" href="/home"> Tony's Pizza</a>
 		</div>
-		<div class = "col-md-5">
+		<div class = "col-md-auto">
 				<a class="link" href="/home">Home</a>
 				<a class="link" href="/edit/user">Edit Profile</a>
 				<a class="link" href="/order/history">Order History</a>
