@@ -87,7 +87,7 @@
 					
 					<a href="/unlikeorder/${order.id}" class="btn btn-danger mb-2 margin-right-2">Remove Favorite</a>
 				</c:if>
-				<a href="/delete/order/${order.id}" class="btn btn-danger">Delete Order</a>
+				<a href="/delete/order/${order.id}" class="btn btn-danger mb-2">Delete Order</a>
 			</div>
 		</div>
 	</c:forEach>
