@@ -49,7 +49,13 @@
 	</div>
 </nav>
 <div class="container">
-	 <h1 class="mt-4">Order History</h1>
+	 <h1 class="mt-4 text-center">Order History</h1>
+	<c:if test="${orders.size() < 1}">
+	 	<div class="text-center mt-4">
+	 		<h2 class="text-danger">You Have Not Made Any Orders Yet</h2>
+	 		<a class="btn btn-primary" href="/make/order">Create Order</a>
+	 	</div>
+	 </c:if>
 	<c:forEach items="${orders}" var="order">
 		<div class="row border border-2 border-secondary rounded shadow-sm d-flex p-3 mt-4 card-background">
 			<div class="row">
