@@ -32,7 +32,7 @@
 				<p class="white navbar-brand link">Welcome!</p>
 			</div>
 				
-			<div class="col-md-5">
+			<div class="col-md-auto">
 				<a class="links" href="/edit/user">Edit Profile</a>
 				<a class="links" href="/make/order">Order</a>
 				<a class="links" href="/order/history">Order History</a>
