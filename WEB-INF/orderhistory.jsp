@@ -39,9 +39,10 @@
 		<div class = "col-md-4">
 			<a class="navbar-brand link" href="/home"> Tony's Pizza</a>
 		</div>
-		<div class = "col-md-5">
+		<div class = "col-md-auto">
 				<a class="link" href="/home">Home</a>
 				<a class="link" href="/edit/user">Edit Profile</a>
+				<a class="link" href="/make/order">Create Order</a>
 				<a class="link" href="/logout">Logout - (${user.firstName} ${user.lastName})</a>
 		</div>
 	
@@ -80,11 +81,11 @@
 				</form:form>
 <%-- 					<a href="/edit/order/${order.id}" class="btn btn-primary mb-2 margin-right-2">Order Again</a> --%>
 				<c:if test="${order.likers.size() < 1}">
-					<a href="/likeorder/${order.id}" class="btn btn-primary mb-2">Add Favorite</a>
+					<a href="/likeorder/${order.id}" class="btn btn-primary mb-2 margin-right-2">Add Favorite</a>
 				</c:if>
 				<c:if test="${order.likers.size() > 0}">
 					
-					<a href="/unlikeorder/${order.id}" class="btn btn-danger mb-2">Remove Favorite</a>
+					<a href="/unlikeorder/${order.id}" class="btn btn-danger mb-2 margin-right-2">Remove Favorite</a>
 				</c:if>
 				<a href="/delete/order/${order.id}" class="btn btn-danger">Delete Order</a>
 			</div>
