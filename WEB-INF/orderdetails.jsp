@@ -56,7 +56,12 @@
 						<h3>Size: ${order.size}</h3>
 					</div>
 					<div>
-						<h3>Toppings: ${order.toppings}</h3>
+						<c:if test="${order.toppings == null}">
+							<h3>Toppings: none</h3>
+						</c:if>
+						<c:if test="${order.toppings != null}">
+							<h3 class = "maxWidth">Toppings: ${order.toppings}</h3>
+						</c:if>
 					</div>
 <!-- 					added Quantity Div -->
 					<div>
@@ -73,10 +78,6 @@
 							<a class="btns text-danger" href="/delete/order/${order.id}">Delete</a>
 						</div>
 					</c:if>
-					<br>
-				    <div class="d-flex flex-row justify-content-around m-3">
-			        	<a class="button" href="/home">Home</a>
-			    	</div>
 				</div>
 				
 				<c:if test="${isTakingOut}">

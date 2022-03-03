@@ -27,12 +27,22 @@ public class StringArrayFunctions {
 	    	String[] str_array = str.split(",");
 	    	return str_array;
 		}
-		String[] nothing = null;
-		return nothing;
+		return null;
 	}
-
+	
+	
+	public static boolean containsEmptyStr(String str)
+	{
+		if (str == null) return false;
+		
+		String[] arr = StringArrayFunctions.strToStrArr(str);
+		for(String string: arr)
+		{
+			if (string == "") return true;
+		}
+		return false;
+	}
 }
-// lines to add to controller
-//String str_toppings = StringArrayFunctions.strArrayToString(arr_toppings);
-//String[] str_arr_toppings = StringArrayFunctions.stringToStrArray(str_toppings);
-//String price = Prices.calculatePrice(arr_toppings, size, quantity);
+
+
+

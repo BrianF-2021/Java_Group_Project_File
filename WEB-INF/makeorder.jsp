@@ -162,6 +162,7 @@
 						<div class = "col-md-10">
 							<form:errors class="text-danger" path="toppings"/>
 							<form:select path="toppings" name="basic[]" multiple="multiple" class="3col active form-control">
+								<option value="">No Toppings</option>
 								<option value=" Tomato Sauce">Tomato Sauce</option>
 								<option value=" Pesto">Pesto Sauce</option>
 								<option value=" Mozzarella">Mozzarella Cheese</option>

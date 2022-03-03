@@ -309,6 +309,11 @@ body{
   border-radius: 5px;
 }
 
+
+.maxWidth
+{
+	max-width: 400px;
+}
 /* #flexDetails */
 /* { */
 /* 	display: flex; */

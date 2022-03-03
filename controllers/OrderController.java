@@ -37,9 +37,6 @@ public class OrderController
 	@Autowired
 	private OrderService orderService;
 
-//	@Autowired
-//	private ViewService viewService;
-	
 	
 	
   @RequestMapping("/order/details/{id}")
@@ -75,7 +72,6 @@ public class OrderController
 		Long user_id = (Long)session.getAttribute("user_id");
 		User usr = this.userService.findUserById(user_id);
     	model.addAttribute("user", usr);
-//		model.addAttribute("categories", this.categoryService.getAllCategories());
         return "makeorder.jsp";
     }
     @RequestMapping(value="/making/order", method=RequestMethod.POST)
@@ -90,13 +86,21 @@ public class OrderController
 		}
 //		Long user_id = (Long)session.getAttribute("user_id");
 //		User usr = this.userService.findUserById(user_id);
-        if (result.hasErrors()) {
+        if (result.hasErrors())
+        {
             return "makeorder.jsp";
-        } else{
-//        	String size = "medium";
-//        	String quantity = "2";
-//        	String[] arr_toppings = {"pep","che","sau"};
-        	String price = Prices.calculatePrice(order.getToppings(), order.getSize(), order.getQuantity());
+        }
+        else
+        {
+        	if ( order.getToppings() != null )
+        	{
+            	if (StringArrayFunctions.containsEmptyStr(order.getToppings()))
+            	{
+            		order.setToppings(null);
+            	}
+        	}
+
+    		String price = Prices.calculatePrice(order.getToppings(), order.getSize(), order.getQuantity());
         	order.setPrice(price);
         	System.out.println("str_toppings: "+order.getToppings());
         	System.out.println(price);
@@ -144,9 +148,10 @@ public class OrderController
 		Long user_id = (Long)session.getAttribute("user_id");
 		User usr = this.userService.findUserById(user_id);
     	model.addAttribute("user", usr);
+    	
 
 		Order this_order = this.orderService.findOrderById(order_id);
-    	model.addAttribute("order", this_order);
+		model.addAttribute("order", this_order);
         return "editorder.jsp";
     }
     @RequestMapping(value="/editing/order/{id}", method=RequestMethod.POST)
@@ -162,13 +167,17 @@ public class OrderController
 		}
 		Long user_id = (Long)session.getAttribute("user_id");
 		User usr = this.userService.findUserById(user_id);
+		Order this_order = this.orderService.findOrderById(order_id);
+
 //    	model.addAttribute("user", usr);
         if (result.hasErrors()) {
         	System.out.println(result);
             return "editorder.jsp";
-        } else{
-        	Order this_order = orderService.save(order);
-        	return "redirect:/order/details/"+this_order.getId();
+        }
+        else
+        {
+        	Order edited_order = orderService.save(Prices.finalizeOrderEdit(order, this_order));
+        	return "redirect:/order/details/"+edited_order.getId();
         }
     }
     
@@ -208,8 +217,6 @@ public class OrderController
     	System.out.println(price);
     	Order this_order = orderService.save(order);
     	return "redirect:/order/details/"+this_order.getId();
-//    	tyring to edit the favorited order being reordered
-//    	return "redirect:/edit/order/"+this_order.getId();
     }
 
     
@@ -223,11 +230,6 @@ public class OrderController
   		orderService.delete(order_id);
   		return "redirect:/order/history";
   	}
-  	
-  	
-
-  	
-  	
 	
 	
 }

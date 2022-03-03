@@ -3,30 +3,40 @@ package com.brianfair.javagroupproject.models;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.brianfair.javagroupproject.services.OrderService;
+
 public class Prices {
 	
-//	private static String[] toppings;
-//	private static String size;
-//	private static String quantity;
-//	private static HashMap<String, Double> pricing; 
-//	
-//	public Prices(String[] toppings, String size, String quantity)
-//	{
-//		Prices.toppings = toppings;
-//		Prices.size = size;
-//		Prices.quantity = quantity;
-//		Prices.pricing.put("toppings", .50);
-//		Prices.pricing.put("small", 9.99);
-//		Prices.pricing.put("medium", 11.99);
-//		Prices.pricing.put("large", 13.99);
-//		Prices.pricing.put("xlarge", 15.99);
-//
-//	}
-//	private static String[] toppings;
-//	private static String size;
-//	private static String quantity;
+	
 	private static HashMap<String, Double> pricing = Prices.setPricing();
 
+	
+	public static Order finalizeOrderEdit(Order editingOrder, Order originalOrder)
+	{
+    	if( (editingOrder.getToppings() == null) && ( (originalOrder.getToppings() != null)) )
+        {
+    		editingOrder.setToppings(originalOrder.getToppings());
+        	String price = Prices.calculatePrice(editingOrder.getToppings(), editingOrder.getSize(), editingOrder.getQuantity());
+        	editingOrder.setPrice(price);
+        	return editingOrder;
+    	}
+    	if(editingOrder.getToppings() != null)
+    	{
+    		if (StringArrayFunctions.containsEmptyStr(editingOrder.getToppings()))
+    		{
+	    		editingOrder.setToppings(null);
+	        	String price = Prices.calculatePrice(editingOrder.getToppings(), editingOrder.getSize(), editingOrder.getQuantity());
+	        	editingOrder.setPrice(price);
+	    		return editingOrder;
+    		}
+    	}
+    	String price = Prices.calculatePrice(editingOrder.getToppings(), editingOrder.getSize(), editingOrder.getQuantity());
+    	editingOrder.setPrice(price);
+		return editingOrder;
+	}
+	
 	
 	public static String calculatePrice(String toppings, String size, String quantity)
 	{
@@ -34,19 +44,19 @@ public class Prices {
 		Double quantityDec = Double.parseDouble(quantity);
 		DecimalFormat decFormat = new DecimalFormat("##.00");
 		Double price_unformatted;
-		if (toppings != null)
+		System.out.println("toppings: "+toppings);
+		if (toppings == null)
+		{
+			price_unformatted = priceDec*quantityDec;
+					
+		}
+		else
 		{
 			String [] these_toppings = StringArrayFunctions.strToStrArr(toppings);
 			Double toppings_price = these_toppings.length*Prices.getPricing().get("toppings");
 			price_unformatted = (toppings_price+priceDec)*quantityDec;
 		}
-		else
-		{
-			price_unformatted = priceDec*quantityDec;
-		}
-//		Double size_price =  Double.parseDouble(decFormat.format(priceDec));
-//		Double qnty_formatted_dbl =  Double.parseDouble(decFormat.format(quantityDec));
-//		Double size_price = Prices.getPricing().get(size);
+
 		Double price_formatted =  Double.parseDouble(decFormat.format(price_unformatted));
 		return price_formatted.toString();
 	}
